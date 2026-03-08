@@ -1,0 +1,19 @@
+Microsoft Windows [Version 10.0.26100.2]
+(c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+C:\Users\User\Desktop\3. Обучение\Netology>docker run -it --name mynode -e NAME=Viacheslav -e SURNAME=Prokopenko node:15.14
+Welcome to Node.js v15.14.0.
+Type ".help" for more information.
+> console.log("Привет, " + process.env.NAME + " " + process.env.SURNAME + "!")
+Привет, Viacheslav Prokopenko!
+undefined
+
+C:\Users\User\Desktop\3. Обучение\Netology>docker stop mynode
+mynode
+
+C:\Users\User\Desktop\3. Обучение\Netology>docker rm mynode  
+mynode
+
+C:\Users\User\Desktop\3. Обучение\Netology>docker rmi node:15.14
+Untagged: node:15.14
+Deleted: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627

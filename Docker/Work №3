@@ -1,0 +1,153 @@
+Microsoft Windows [Version 10.0.26100.2]
+(c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+C:\Docker>docker pull node:15.14
+15.14: Pulling from library/node
+Digest: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Status: Image is up to date for node:15.14
+docker.io/library/node:15.14
+
+C:\Docker>docker run -d --name first_node -v %cd%//var/first/data node:15.14 tail -f /dev/null
+194d74d74e9b4d642cae63e6c90a234d6cfcc77b77f912af61c84448a1cfb863
+
+C:\Docker>docker run -d --name second_node -v %cd%//var/second/data node:15.14 tail -f /dev/null
+325c3b6422d37aaed81096f98e380d3d5e9eabdd2fece721949f8e1fc1848f73
+
+C:\Docker>docker exec -it first_node bash
+root@194d74d74e9b:/# echo "File from first container" > /var/first/data/from_first.txt
+bash: /var/first/data/from_first.txt: No such file or directory
+root@194d74d74e9b:/# exit
+exit
+
+C:\Docker>echo File from host machine > date\from_host.txt
+Системе не удается найти указанный путь.
+
+C:\Docker>docker exec -it first_node bash
+root@194d74d74e9b:/# echo "File from first container" > /var/first/data/from_first.txt
+bash: /var/first/data/from_first.txt: No such file or directory
+root@194d74d74e9b:/# sudo echo "File from first container" > /var/first/data/from_first.txt
+bash: /var/first/data/from_first.txt: No such file or directory
+root@194d74d74e9b:/# mount | grep /var/first/data
+/dev/sde on /C:\Docker/var/first/data type ext4 (rw,relatime)
+root@194d74d74e9b:/# ls -la /var/first
+ls: cannot access '/var/first': No such file or directory
+root@194d74d74e9b:/# mkdir -p /var/first/data
+root@194d74d74e9b:/# echo "File from first container" > /var/first/data/from_first.txt
+root@194d74d74e9b:/# exit
+exit
+
+C:\Docker>echo File from host machine > data\from_host.txt
+
+C:\Docker>docker exec -it second_node bash
+root@325c3b6422d3:/# ls /var/second/data
+ls: cannot access '/var/second/data': No such file or directory
+root@325c3b6422d3:/# mkdir /var/second/data
+mkdir: cannot create directory '/var/second/data': No such file or directory
+root@325c3b6422d3:/# mkdir -p /var/first/data
+root@325c3b6422d3:/# cat /var/second/data/from_first.txt
+cat: /var/second/data/from_first.txt: No such file or directory
+root@325c3b6422d3:/# exit
+exit
+
+C:\Docker>docker ps -a
+CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS                      PORTS     NAMES
+325c3b6422d3   node:15.14   "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes                  
+       second_node
+194d74d74e9b   node:15.14   "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes                  
+       first_node
+d3d05092f38d   node:15.14   "docker-entrypoint.s…"   24 minutes ago   Exited (0) 24 minutes ago             hopeful_mccarthy
+
+
+C:\Docker>docker ps
+CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS          PORTS     NAMES
+325c3b6422d3   node:15.14   "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes             second_node
+194d74d74e9b   node:15.14   "docker-entrypoint.s…"   12 minutes ago   Up 12 minutes             first_node
+
+
+C:\Docker>docker stop mynode
+Error response from daemon: No such container: mynode
+
+C:\Docker>docker stop second_node
+second_node
+
+C:\Docker>docker rm second_node  
+second_node
+
+C:\Docker>docker stop first_node 
+first_node
+
+C:\Docker>docker rm first_node  
+first_node
+
+C:\Docker>docker pull node:15.14
+15.14: Pulling from library/node
+Digest: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627
+Status: Image is up to date for node:15.14
+docker.io/library/node:15.14
+
+C:\Docker>mkdir data
+
+C:\Docker>docker run -d --name first_node -v %cd%//var/first/data node:15.14 tail -f /dev/null
+9b5ce7cef5f8a6edb66bd65ccbbd4a09e0d790ffdbaf6f7239ebe8b67bfe7f61
+
+C:\Docker>docker run -d --name second_node -v %cd%//var/second/data node:15.14 tail -f /dev/null
+f13c99977fdaab4be37937716a9aca191805c15773534d32f5befdec9e413493
+
+C:\Docker>docker exec -it first_node bash
+root@9b5ce7cef5f8:/# echo "File from first container" > /var/first/data/from_first.txt
+bash: /var/first/data/from_first.txt: No such file or directory
+root@9b5ce7cef5f8:/# mkdir -p /var/first/data && echo "File from first container" > /var/first/data/from_first.txt
+root@9b5ce7cef5f8:/# echo "File from first container" > /var/first/data/from_first.txt
+root@9b5ce7cef5f8:/# exit
+exit
+
+C:\Docker>echo File from host machine > data\from_host.txt
+
+C:\Docker>docker exec -it second_node bash
+root@f13c99977fda:/# ls /var/second/data
+ls: cannot access '/var/second/data': No such file or directory
+root@f13c99977fda:/# exit 
+exit
+
+C:\Docker>docker stop first_node second_node
+first_node
+second_node
+
+C:\Docker>docker rm first_node second_node  
+first_node
+second_node
+
+C:\Docker>docker rmi node:15.14           
+Error response from daemon: conflict: unable to delete node:15.14 (must be forced) - container d3d05092f38d is using its referenced image 608bba799613
+
+C:\Docker>docker ps            
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Docker>docker ps -a
+CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS                      PORTS     NAMES
+d3d05092f38d   node:15.14   "docker-entrypoint.s…"   29 minutes ago   Exited (0) 29 minutes ago             hopeful_mccarthy
+
+C:\Docker>docker rmi node:15.14
+Error response from daemon: conflict: unable to delete node:15.14 (must be forced) - container d3d05092f38d is using its referenced image 608bba799613
+
+C:\Docker>docker stop first_node second_node
+Error response from daemon: No such container: first_node
+Error response from daemon: No such container: second_node
+
+C:\Docker>docker rm first_node second_node
+Error response from daemon: No such container: first_node
+Error response from daemon: No such container: second_node
+
+C:\Docker>docker rmi node:15.14
+Error response from daemon: conflict: unable to delete node:15.14 (must be forced) - container d3d05092f38d is using its referenced image 608bba799613
+
+C:\Docker>docker ps -a --filter "ancestor=node:15.14"
+CONTAINER ID   IMAGE        COMMAND                  CREATED          STATUS                      PORTS     NAMES
+d3d05092f38d   node:15.14   "docker-entrypoint.s…"   31 minutes ago   Exited (0) 31 minutes ago             hopeful_mccarthy
+
+C:\Docker>docker rm d3d05092f38d
+d3d05092f38d
+
+C:\Docker>docker rmi node:15.14
+Untagged: node:15.14
+Deleted: sha256:608bba799613b1ebf754034ae008849ba51e88b23271412427b76d60ae0d0627

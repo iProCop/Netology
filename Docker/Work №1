@@ -1,0 +1,147 @@
+Microsoft Windows [Version 10.0.26100.2]
+(c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+C:\Users\User\Desktop\3. Обучение\Netology>docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Users\User\Desktop\3. Обучение\Netology>docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Users\User\Desktop\Мысь\3. Обучение\Netology>docker images
+                                          i Info →   U  In Use
+IMAGE   ID             DISK USAGE   CONTENT SIZE   EXTRA
+
+C:\Users\User\Desktop\3. Обучение\Netology> 
+ *  History restored 
+
+Microsoft Windows [Version 10.0.26100.2]
+(c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+C:\Users\User\Desktop\3. Обучение\Netology>cd Docker
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker pull busybox:latest
+latest: Pulling from library/busybox
+61dfb50712f5: Pull complete
+96cfb76e59bd: Download complete
+Digest: sha256:b3255e7dfbcd10cb367af0d409747d511aeb66dfac98cf30e97e87e4207dd76f
+Status: Downloaded newer image for busybox:latest
+docker.io/library/busybox:latest
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker ps 
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker run --name pinger busybox:latest ping -c 7 netology.ru
+PING netology.ru (51.250.51.8): 56 data bytes
+64 bytes from 51.250.51.8: seq=0 ttl=63 time=107.216 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=106.057 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=105.872 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.820 ms
+64 bytes from 51.250.51.8: seq=4 ttl=63 time=106.616 ms
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.096 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=145.100 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 105.872/111.968/145.100 ms
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker ps -a
+CONTAINER ID   IMAGE            COMMAND                  CREATED          STATUS                     
+ PORTS     NAMES
+c79b70a946ce   busybox:latest   "ping -c 7 netology.…"   19 seconds ago   Exited (0) 12 seconds ago             pinger
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker logs pinger
+PING netology.ru (51.250.51.8): 56 data bytes
+64 bytes from 51.250.51.8: seq=0 ttl=63 time=107.216 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=106.057 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=105.872 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.820 ms
+64 bytes from 51.250.51.8: seq=4 ttl=63 time=106.616 ms
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.096 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=145.100 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 105.872/111.968/145.100 ms
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker start pinger
+pinger
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker ps -a
+CONTAINER ID   IMAGE            COMMAND                  CREATED              STATUS                 
+    PORTS     NAMES
+c79b70a946ce   busybox:latest   "ping -c 7 netology.…"   About a minute ago   Exited (0) 2 seconds ago             pinger
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker logs pinger 
+PING netology.ru (51.250.51.8): 56 data bytes
+64 bytes from 51.250.51.8: seq=0 ttl=63 time=107.216 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=106.057 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=105.872 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.820 ms
+64 bytes from 51.250.51.8: seq=4 ttl=63 time=106.616 ms
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.096 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=145.100 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 105.872/111.968/145.100 ms
+PING netology.ru (51.250.51.8): 56 data bytes
+64 bytes from 51.250.51.8: seq=0 ttl=63 time=105.390 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=105.979 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=106.596 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.232 ms
+round-trip min/avg/max = 105.872/111.968/145.100 ms
+PING netology.ru (51.250.51.8): 56 data bytes
+64 bytes from 51.250.51.8: seq=0 ttl=63 time=105.390 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=105.979 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=106.596 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.232 ms
+PING netology.ru (51.250.51.8): 56 data bytes
+64 bytes from 51.250.51.8: seq=0 ttl=63 time=105.390 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=105.979 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=106.596 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.232 ms
+64 bytes from 51.250.51.8: seq=4 ttl=63 time=106.850 ms
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.644 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=108.403 ms
+64 bytes from 51.250.51.8: seq=1 ttl=63 time=105.979 ms
+64 bytes from 51.250.51.8: seq=2 ttl=63 time=106.596 ms
+64 bytes from 51.250.51.8: seq=3 ttl=63 time=106.232 ms
+64 bytes from 51.250.51.8: seq=4 ttl=63 time=106.850 ms
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.644 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=108.403 ms
+
+64 bytes from 51.250.51.8: seq=4 ttl=63 time=106.850 ms
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.644 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=108.403 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+64 bytes from 51.250.51.8: seq=5 ttl=63 time=106.644 ms
+64 bytes from 51.250.51.8: seq=6 ttl=63 time=108.403 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 105.390/106.584/108.403 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 105.390/106.584/108.403 ms
+
+--- netology.ru ping statistics ---
+7 packets transmitted, 7 packets received, 0% packet loss
+round-trip min/avg/max = 105.390/106.584/108.403 ms
+
+round-trip min/avg/max = 105.390/106.584/108.403 ms
+
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker rm pinger
+pinger
+
+C:\Users\User\Desktop\3. Обучение\Netology\Docker>docker rmi busybox:latest
+Untagged: busybox:latest
+Deleted: sha256:b3255e7dfbcd10cb367af0d409747d511aeb66dfac98cf30e97e87e4207dd76f
+
+Анализ логов - 2 запуска (ping) и 14 запросов
