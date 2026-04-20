@@ -12,5 +12,9 @@
   "devDependencies": {
     "@types/node": "^25.5.0",
     "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "inversify": "^8.1.0",
+    "reflect-metadata": "^0.2.2"
   }
 }
