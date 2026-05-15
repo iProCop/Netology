@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { BookService } from './books.service';
 
 @Controller('/books')
@@ -9,14 +9,27 @@ export class BooksController {
     getAll() {
         return this.booksService.getAll();
     }
-
-    @Get('id')
-    getById(@Param('id', ParseIntPipe) id: number) {
+    
+    @Get(':id')
+    getById(@Param('id') id: string) {
         return this.booksService.getById(id);
     }
 
     @Post()
-    add(@Body() body: {title: string, author: string}) {
-        return this.booksService.addBook(body.title, body.author);
+    create(@Body() body: { title: string, author: string }) {
+        return this.booksService.create(body.title, body.author);
+    }
+
+    @Put(':id')
+    update(
+        @Param('id') id: string,
+        @Body() body: { title: string, author: string },
+    ) {
+        return this.booksService.update(id, body.title, body.author);
+    }
+
+    @Delete(':id')
+    remove(@Param('id') id: string) {
+        return this.booksService.remove(id);
     }
 }

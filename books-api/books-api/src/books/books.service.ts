@@ -1,30 +1,33 @@
 import { Injectable } from "@nestjs/common";
-
-export interface Book {
-    id: number;
-    title: string;
-    author: string;
-}
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { Book, BookDocument, BookSchema } from './schemas/book.schema';
 
 @Injectable()
 export class BookService {
-    private Books: Book[] = [
-        {id: 1, title: 'Изучаем NestJS', author: 'Програмист'},
-        {id: 2, title: 'Изучаем радиотехнику', author: 'Инженер'}
-    ];
+    constructor(
+        @InjectModel(Book.name) private bookModel: Model<BookDocument>,
+    ) {}
 
-    getAll(): Book[] {
-        return this.Books;
+    async getById(id: string): Promise<Book | null> {
+        return this.bookModel.findById(id).exec();
     }
 
-    getById(id: number): Book | undefined {
-        return this.Books.find((book) => book.id === id);
+    async getAll(): Promise<Book[]> {
+        return this.bookModel.find().exec();
     }
 
-    addBook(title: string, author: string): Book {
-        const newId = this.Books.length > 0 ? this.Books[this.Books.length - 1].id + 1 : 1;
-        const newBook: Book = { id: newId, title, author};
-        this.Books.push(newBook);
-        return newBook;
+    async create(title: string, author: string): Promise<Book> {
+        return this.bookModel.create({ title, author });
+    }
+
+    async update(id: string, title: string, author: string): Promise<Book | null> {
+        return this.bookModel
+        .findByIdAndUpdate(id, { title, author }, { new: true })
+        .exec();
+    }
+
+    async remove(id: string): Promise<Book | null> {
+        return this.bookModel.findByIdAndDelete(id).exec();
     }
 }
